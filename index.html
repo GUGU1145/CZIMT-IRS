@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常州机电 · 智能机器人工作室</title>
+
+    <!-- 字体与图标库（本地离线版本，无需联网） -->
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+
+    <style>
+        /* 样式与之前完全一致，未改动，此处省略（因篇幅太长，实际使用时请保留全部样式） */
+        /* 为节省篇幅，这里用占位注释，实际您需要复制上面的完整样式 */
+        /* 完整样式请使用前面回复中最后一次给出的所有CSS代码 */
+        /* 注意：下面仅为示意，实际使用时请粘贴完整样式 */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --primary:#1A6B8A; --primary-dark:#0F4B63; --accent:#3A9BC7; --bg-white:#FFFFFF; --text-dark:#1A2A3A; --text-muted:#3E5A6A; --shadow-sm:0 8px 30px rgba(26,107,138,0.10); --shadow-hover:0 20px 50px rgba(26,107,138,0.18); --radius:28px; --radius-sm:14px; --transition:0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+        html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+        body { font-family:'Inter','Noto Sans SC',sans-serif; color:var(--text-dark); line-height:1.6; background:linear-gradient(145deg,#b5d9f0 0%,#d4edfa 60%,#e3f3fc 100%); min-height:100vh; position:relative; overflow-x:hidden; }
+        body::before { content:''; position:fixed; inset:0; background:rgba(255,255,255,0.50); z-index:0; pointer-events:none; backdrop-filter:blur(0.5px); }
+        a { text-decoration:none; color:inherit; }
+        img { max-width:100%; display:block; }
+        .container { max-width:1200px; margin:0 auto; padding:0 28px; }
+        section { position:relative; z-index:1; background:var(--bg-white); border-radius:var(--radius); box-shadow:var(--shadow-sm); margin:50px 20px; padding:80px 0; transition:box-shadow var(--transition); }
+        section:hover { box-shadow:var(--shadow-hover); }
+        .hero { margin-top:100px; }
+        .about,.work,.team,.contact { background:var(--bg-white); }
+        .navbar { position:fixed; top:0; left:0; width:100%; z-index:1000; padding:16px 0; background:rgba(255,255,255,0.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%); border-bottom:1px solid rgba(26,107,138,0.08); transition:var(--transition); }
+        .navbar.scrolled { box-shadow:0 4px 30px rgba(26,107,138,0.10); }
+        .navbar .container { display:flex; align-items:center; justify-content:space-between; }
+        .logo { font-size:1.5rem; font-weight:700; letter-spacing:-0.5px; display:flex; align-items:center; gap:10px; color:var(--text-dark); }
+        .logo i { color:var(--primary); font-size:1.8rem; }
+        .logo span { background:linear-gradient(135deg,var(--primary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .logo small { font-size:0.7rem; font-weight:400; color:var(--text-muted); -webkit-text-fill-color:var(--text-muted); background:none; margin-left:4px; }
+        .nav-links { display:flex; gap:36px; list-style:none; font-weight:500; font-size:0.95rem; }
+        .nav-links a { color:var(--text-muted); transition:var(--transition); position:relative; }
+        .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2.5px; background:var(--primary); border-radius:4px; transition:var(--transition); }
+        .nav-links a:hover { color:var(--text-dark); }
+        .nav-links a:hover::after { width:100%; }
+        .nav-cta { background:var(--primary); color:#fff !important; padding:8px 22px; border-radius:40px; font-weight:600; transition:var(--transition); }
+        .nav-cta::after { display:none !important; }
+        .nav-cta:hover { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(26,107,138,0.30); color:#fff !important; }
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+        .hamburger span { display:block; width:28px; height:3px; background:var(--text-dark); border-radius:4px; transition:var(--transition); }
+        .section-label { display:inline-block; font-size:0.8rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--primary); background:rgba(26,107,138,0.10); padding:6px 18px; border-radius:40px; margin-bottom:16px; }
+        .section-title { font-size:2.8rem; font-weight:700; line-height:1.2; letter-spacing:-1px; margin-bottom:20px; }
+        .section-title .highlight { background:linear-gradient(135deg,var(--primary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .section-desc { font-size:1.15rem; color:var(--text-muted); max-width:580px; line-height:1.7; }
+        .text-center { text-align:center; }
+        .mx-auto { margin-left:auto; margin-right:auto; }
+        .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+        .hero-content h1 { font-size:3.8rem; font-weight:700; line-height:1.1; letter-spacing:-2px; margin-bottom:24px; }
+        .hero-content h1 .highlight { background:linear-gradient(135deg,var(--primary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .hero-content p { font-size:1.2rem; color:var(--text-muted); max-width:480px; margin-bottom:36px; line-height:1.8; }
+        .hero-buttons { display:flex; gap:16px; flex-wrap:wrap; }
+        .btn-primary { display:inline-flex; align-items:center; gap:10px; background:var(--primary); color:#fff; padding:14px 34px; border-radius:60px; font-weight:600; transition:var(--transition); border:none; cursor:pointer; font-size:1rem; }
+        .btn-primary:hover { background:var(--primary-dark); transform:translateY(-4px); box-shadow:0 16px 40px rgba(26,107,138,0.25); }
+        .btn-outline { display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--text-dark); padding:14px 34px; border-radius:60px; font-weight:600; border:2px solid rgba(26,107,138,0.20); transition:var(--transition); }
+        .btn-outline:hover { border-color:var(--primary); color:var(--primary); transform:translateY(-4px); box-shadow:0 8px 24px rgba(26,107,138,0.08); }
+        .hero-visual { display:flex; flex-direction:column; gap:20px; }
+        .hero-visual .main-img { border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); width:100%; height:340px; object-fit:cover; background:#d4e7f5; transition:var(--transition); }
+        .hero-visual .main-img:hover { transform:scale(1.01); box-shadow:var(--shadow-hover); }
+        .hero-visual .thumb-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+        .hero-visual .thumb-row img,.hero-visual .thumb-row video { border-radius:var(--radius-sm); height:100px; object-fit:cover; background:#d4e7f5; transition:var(--transition); cursor:pointer; }
+        .hero-visual .thumb-row img:hover,.hero-visual .thumb-row video:hover { transform:scale(1.04); box-shadow:var(--shadow-sm); }
+        .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-top:40px; }
+        .about-image { border-radius:var(--radius-sm); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); }
+        .about-image:hover { box-shadow:var(--shadow-hover); transform:scale(1.01); }
+        .about-image img { width:100%; height:380px; object-fit:cover; background:#d4e7f5; }
+        .about-text h3 { font-size:1.8rem; font-weight:600; margin-bottom:16px; }
+        .about-text p { color:var(--text-muted); margin-bottom:20px; font-size:1.05rem; line-height:1.8; }
+        .about-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px; }
+        .stat-item { background:rgba(26,107,138,0.06); padding:20px 16px; border-radius:var(--radius-sm); text-align:center; }
+        .stat-item .number { font-size:2rem; font-weight:700; color:var(--primary); }
+        .stat-item .label { font-size:0.85rem; color:var(--text-muted); margin-top:4px; }
+        .work-filter { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:32px 0 48px; }
+        .work-filter button { padding:10px 28px; border:none; background:rgba(26,107,138,0.06); border-radius:40px; font-weight:500; color:var(--text-muted); cursor:pointer; transition:var(--transition); font-size:0.95rem; }
+        .work-filter button.active,.work-filter button:hover { background:var(--primary); color:#fff; box-shadow:0 8px 24px rgba(26,107,138,0.20); transform:translateY(-2px); }
+        .work-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:28px; }
+        .work-card { background:var(--bg-white); border-radius:var(--radius-sm); overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.02); transition:transform 1s ease,box-shadow 1s ease; cursor:pointer; border:1px solid rgba(26,107,138,0.06); position:relative; }
+        .work-card:hover { transform:scale(1.05); z-index:20; box-shadow:0 24px 56px rgba(26,107,138,0.22); }
+        .work-card .media { width:100%; height:220px; object-fit:cover; background:#d4e7f5; }
+        .work-card .media-video { width:100%; height:220px; object-fit:cover; background:#1A2A3A; }
+        .work-card .card-body { padding:22px 24px 26px; }
+        .work-card .card-body h4 { font-size:1.2rem; font-weight:600; margin-bottom:6px; }
+        .work-card .card-body p { color:var(--text-muted); font-size:0.95rem; }
+        .work-card .tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--primary); background:rgba(26,107,138,0.08); padding:4px 14px; border-radius:40px; margin-top:10px; }
+        /* 悬停预览浮层 */
+        .card-preview { position:fixed; z-index:9999; background:var(--bg-white); border-radius:var(--radius-sm); box-shadow:0 30px 70px rgba(26,107,138,0.25); padding:20px; opacity:0; transform:translateY(10px); transition:opacity 0.5s ease,transform 0.5s ease; pointer-events:none; max-width:360px; }
+        .card-preview.show { opacity:1; transform:translateY(0); }
+        .card-preview img,.card-preview video { width:100%; max-height:300px; object-fit:contain; border-radius:10px; margin-bottom:14px; }
+        .card-preview h4 { font-size:1.1rem; font-weight:600; margin-bottom:6px; color:var(--text-dark); }
+        .card-preview p { font-size:0.9rem; color:var(--text-muted); line-height:1.6; }
+        .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:32px; margin-top:48px; }
+        .team-card { text-align:center; background:rgba(26,107,138,0.03); padding:32px 20px 28px; border-radius:var(--radius-sm); transition:var(--transition); border:1px solid rgba(26,107,138,0.04); }
+        .team-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-hover); background:var(--bg-white); }
+        .team-card .avatar { width:110px; height:110px; border-radius:50%; object-fit:cover; margin:0 auto 16px; background:#d4e7f5; border:4px solid var(--bg-white); box-shadow:var(--shadow-sm); }
+        .team-card h4 { font-size:1.15rem; font-weight:600; }
+        .team-card .role { color:var(--primary); font-weight:500; font-size:0.9rem; }
+        .team-card .bio { color:var(--text-muted); font-size:0.9rem; margin-top:8px; }
+        .team-social { display:flex; justify-content:center; gap:14px; margin-top:16px; }
+        .team-social a { color:var(--text-muted); transition:var(--transition); font-size:1.1rem; }
+        .team-social a:hover { color:var(--primary); transform:scale(1.1); }
+        .contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:40px; }
+        .contact-info h3 { font-size:1.8rem; font-weight:600; margin-bottom:16px; }
+        .contact-info p { color:var(--text-muted); margin-bottom:28px; font-size:1.05rem; }
+        .contact-item { display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+        .contact-item i { width:48px; height:48px; background:rgba(26,107,138,0.06); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:1.2rem; box-shadow:var(--shadow-sm); }
+        .contact-item span { font-weight:500; }
+        .contact-item small { display:block; color:var(--text-muted); font-size:0.9rem; }
+        .contact-form { background:rgba(26,107,138,0.02); padding:40px 36px; border-radius:var(--radius-sm); border:1px solid rgba(26,107,138,0.06); }
+        .contact-form .form-group { margin-bottom:20px; }
+        .contact-form label { display:block; font-weight:600; font-size:0.9rem; margin-bottom:6px; }
+        .contact-form input,.contact-form textarea { width:100%; padding:14px 18px; border:2px solid #EAF0F5; border-radius:var(--radius-sm); font-family:inherit; font-size:1rem; transition:var(--transition); background:var(--bg-white); outline:none; }
+        .contact-form input:focus,.contact-form textarea:focus { border-color:var(--primary); box-shadow:0 0 0 4px rgba(26,107,138,0.08); }
+        .contact-form textarea { min-height:130px; resize:vertical; }
+        .contact-form .btn-primary { width:100%; justify-content:center; padding:16px; font-size:1.05rem; }
+        .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; padding:12px 28px; border-radius:40px; font-weight:600; z-index:9999; animation:toastIn 0.35s ease; box-shadow:0 8px 30px rgba(26,107,138,0.30); }
+        @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(20px);} to{opacity:1;transform:translateX(-50%) translateY(0);} }
+        footer { background:var(--text-dark); color:rgba(255,255,255,0.6); padding:48px 0 32px; margin-top:60px; position:relative; z-index:1; }
+        footer .container { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+        footer .logo { color:#fff; -webkit-text-fill-color:#fff; }
+        footer .logo span { -webkit-text-fill-color:transparent; }
+        footer .footer-links { display:flex; gap:28px; list-style:none; }
+        footer .footer-links a { transition:var(--transition); }
+        footer .footer-links a:hover { color:#fff; }
+        footer .copy { font-size:0.9rem; width:100%; text-align:center; margin-top:20px; border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; }
+        @media (max-width:992px) { .hero-grid { grid-template-columns:1fr; gap:40px; } .hero-content h1 { font-size:2.8rem; } .about-grid { grid-template-columns:1fr; } .contact-wrapper { grid-template-columns:1fr; } .section-title { font-size:2.2rem; } section { margin:30px 15px; padding:60px 0; } .hero { margin-top:80px; } }
+        @media (max-width:768px) { .nav-links { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:rgba(255,255,255,0.98); backdrop-filter:blur(14px); padding:24px 32px; border-bottom:1px solid rgba(0,0,0,0.04); gap:20px; box-shadow:0 20px 40px rgba(0,0,0,0.04); } .nav-links.open { display:flex; } .hamburger { display:flex; } .hero { padding-top:40px; padding-bottom:40px; } .hero-content h1 { font-size:2.4rem; } .hero-visual .main-img { height:220px; } .hero-visual .thumb-row img { height:70px; } .about-stats { grid-template-columns:1fr 1fr; } .work-grid { grid-template-columns:1fr 1fr; } .team-grid { grid-template-columns:1fr 1fr; } footer .container { flex-direction:column; text-align:center; } section { margin:20px 12px; padding:40px 0; } .hero { margin-top:70px; } }
+        .work-card.card-folded { display:none; }
+        .work-toggle-wrap { text-align:center; margin-top:36px; }
+        .work-toggle { display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--primary); padding:12px 36px; border-radius:60px; font-weight:600; border:2px solid rgba(26,107,138,0.25); transition:var(--transition); cursor:pointer; font-size:0.95rem; font-family:inherit; }
+        .work-toggle:hover { background:var(--primary); color:#fff; border-color:var(--primary); box-shadow:0 8px 24px rgba(26,107,138,0.18); transform:translateY(-2px); }
+        .work-toggle i { transition:var(--transition); }
+        .work-toggle.expanded i { transform:rotate(180deg); }
+        @media (max-width:480px) { .work-grid { grid-template-columns:1fr; } .team-grid { grid-template-columns:1fr; } .about-stats { grid-template-columns:1fr; } .hero-buttons .btn-primary,.hero-buttons .btn-outline { width:100%; justify-content:center; } .contact-form { padding:28px 20px; } }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 导航栏 ===== -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-robot"></i>
+                <span>智能机器人工作室</span>
+                <small>常州机电</small>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">关于</a></li>
+                <li><a href="#work">竞赛 & 项目</a></li>
+                <li><a href="#team">团队</a></li>
+                <li><a href="#history">历代团队</a></li>
+                <li><a href="#contact" class="nav-cta">加入我们</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== 1. HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="section-label"><i class="fas fa-microchip" style="margin-right:6px;"></i> 自主研发 · 竞赛育人</span>
+                    <h1>
+                        智能机器人 <span class="highlight">创新人才</span><br />培养基地
+                    </h1>
+                    <p>
+                        常州机电职业技术学院智能机器人工作室，致力于培养具备机器人自主研发能力的优秀学子。我们以赛促学，在 RoboMaster、Robocon 等顶级赛事中不断突破，为行业输送实战型人才。
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#work" class="btn-primary">
+                            <i class="fas fa-trophy"></i> 竞赛成果
+                        </a>
+                        <a href="#contact" class="btn-outline">
+                            <i class="fas fa-user-plus"></i> 加入我们
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img
+                    class="main-img"
+                    src="assets/images/hero.jpg"
+                    alt="机器人实验室"
+                    />
+                    <div class="thumb-row">
+                        <video class="thumb-video" src="assets/videos/debug.mp4" muted loop playsinline autoplay style="border-radius:var(--radius-sm);height:100px;object-fit:cover;background:#1A2A3A;cursor:pointer;"></video>
+                        <img src="assets/images/DLB.jpg" alt="电路板" />
+                        <video class="thumb-video" src="assets/videos/match.mp4" muted loop playsinline autoplay style="border-radius:var(--radius-sm);height:100px;object-fit:cover;background:#1A2A3A;cursor:pointer;"></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 2. ABOUT ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-flag"></i> 工作室使命</span>
+                <h2 class="section-title">以赛促学 · <span class="highlight">智创未来</span></h2>
+                <p class="section-desc mx-auto">
+                    我们扎根常州机电，以机器人自主研发为核心，通过竞赛、项目实践和技术交流，培养学生的工程思维与创新能力。
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="assets/images/about.jpg" alt="团队协作" />
+                </div>
+                <div class="about-text">
+                    <h3>从实验室到赛场，从理论到真机</h3>
+                    <p>
+                        工作室由工学博士束攀峰副教授领衔，聚焦智能机器人、具身智能与AI应用。自2025年起，我们以“项目贯穿”模式开展实战化育人。学生自主完成六足机器人、机甲大师步兵机器人、智能机械臂等整机系统的结构设计、运动控制算法、机器视觉及嵌入式软硬件协同开发，将前沿技术直接转化为工程实体。
+                    </p>
+                    <p>
+                        我们坚持底层硬件、嵌入式软件与机械结构综合训练，鼓励自主设计、制造和调试完整机器人系统，致力于培养既懂算法又懂工艺、兼具国际视野的“硬核”工程师，为大国智造注入青春动能。
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="number">10+</div>
+                            <div class="label">国家级竞赛奖项</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">5</div>
+                            <div class="label">自主研发机器人</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">20+</div>
+                            <div class="label">核心学生成员</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 3. WORK (竞赛 & 项目) ===== -->
+    <section class="work" id="work">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-robot"></i> 竞赛 & 项目</span>
+                <h2 class="section-title">我们的 <span class="highlight">实战足迹</span></h2>
+                <p class="section-desc mx-auto">从 RoboMaster 的对抗到智能小车的竞速，每一次挑战都是成长的阶梯。</p>
+            </div>
+
+            <!-- 过滤按钮  -->
+            <div class="work-filter">
+                <button class="active">全部</button>
+                <button>RoboMaster</button>
+                <button>自研智能</button>
+                <button>技术展会</button>
+                <button>校园研学</button>
+                <button>对外交流</button>
+                <button>多元荣誉</button>
+            </div>
+
+            <div class="work-grid">
+                <!-- 卡片 1 - 步兵机器人 -->
+                <div class="work-card">
+                    <img class="media" src="assets/images/work1.jpg" alt="RoboMaster 机器人" />
+                    <div class="card-body">
+                        <h4>RoboMaster 2026区域赛 步兵机器人</h4>
+                        <p>全自主设计的步兵机器人，具有全向底盘和轻量化特点。</p>
+                        <span class="tag">RoboMaster,自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 2 - RM 比赛实况 -->
+                <div class="work-card">
+                    <img class="media" src="assets/images/work2.jpg" alt="RoboMaster 比赛实况" />
+                    <div class="card-body">
+                        <h4>RoboMaster 2026 区域赛现场</h4>
+                        <p>步兵机器人在赛场前进行最后的维护检修阶段。</p>
+                        <span class="tag">RoboMaster</span>
+                    </div>
+                </div>
+                <!-- 卡片 3 - 智能小车 -->
+                <div class="work-card">
+                    <img class="media" src="assets/images/work3.jpg" alt="智能小车" />
+                    <div class="card-body">
+                        <h4>智能小车硬件设计</h4>
+                        <p>基于 ST 芯片的循迹小车主板设计，保证速度与稳定性的完美结合。</p>
+                        <span class="tag">自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 4 - ST 展会 -->
+                <div class="work-card">
+                    <img class="media" src="assets/images/work4.jpg" alt="ST 展会" />
+                    <div class="card-body">
+                        <h4>广州 ST 芯片展会 交流</h4>
+                        <p>与 ST 工程师深入交流，学习最新 MCU 与传感器方案。</p>
+                        <span class="tag">技术展会</span>
+                    </div>
+                </div>
+                <!-- 卡片 5 - 视频 (小车演示) -->
+                <div class="work-card">
+                    <video class="media-video" muted loop playsinline>
+                        <source src="assets/videos/car_demo.mp4" type="video/mp4" />
+                    </video>
+                    <div class="card-body">
+                        <h4>AGV机械臂机器人 操作演示</h4>
+                        <p>自主 PID 控制算法，在复杂检修场景中稳定发挥。</p>
+                        <span class="tag">自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 6 -  -->
+                <div class="work-card">
+                    <img class="media" src="assets/images/work6.jpg" alt="实验室研发" />
+                    <div class="card-body">
+                        <h4>RoboMaster比赛 完赛合影</h4>
+                        <p>耗时3天,从抵达会馆,开始对机器人进行比赛检测到完赛收官。</p>
+                        <span class="tag">RoboMaster,多元荣誉</span>
+                    </div>
+                </div>
+                <!-- 卡片 7 - -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/work7.jpg" alt="RoboMaster 云台系统" />
+                    <div class="card-body">
+                        <h4>福州大学·常机电实验室技术探讨会</h4>
+                        <p>与福州大学·浮舟湿地战队关于工程机器人进行设计理念探讨。</p>
+                        <span class="tag">对外交流</span>
+                    </div>
+                </div>
+                <!-- 卡片 8 - RM 视觉识别 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/work8.jpg" alt="RoboMaster 视觉识别" />
+                    <div class="card-body">
+                        <h4>装甲板视觉识别与自动瞄准</h4>
+                        <p>基于 OpenCV 的装甲板检测算法，融合深度相机实现实时目标跟踪与弹道解算。</p>
+                        <span class="tag">RoboMaster,自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 9 - RM 工程机器人 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/work9.jpg" alt="RoboMaster 主控与通信" />
+                    <div class="card-body">
+                        <h4>RoboMaster 2026区域赛 工程机器人</h4>
+                        <p>以达妙电机·CAN总线通信的设计模式,通过自定义控制器来映射,协调整体机械臂运行。</p>
+                        <span class="tag">RoboMaster,自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 10 - 校园研学 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/study1.jpg" alt="中小学生机器人体验" />
+                    <div class="card-body">
+                        <h4>中小学机器人科普体验</h4>
+                        <p>接待周边中小学师生来访，开展机器人操作体验与科普讲座，播撒科技种子。</p>
+                        <span class="tag">校园研学</span>
+                    </div>
+                </div>
+                <!-- 卡片 11 - 校园研学 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/study2.jpg" alt="校园开放日展示" />
+                    <div class="card-body">
+                        <h4>校园开放日 · 工作室展示</h4>
+                        <p>每年春假，向中小学学生及家长展示竞赛机器人，现场演示对抗与循迹，科普知识。</p>
+                        <span class="tag">校园研学</span>
+                    </div>
+                </div>
+                <!-- 卡片 12 - 六足机器人 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/hexapod.jpg" alt="自研六足机器人" />
+                    <div class="card-body">
+                        <h4>自研六足仿生机器人</h4>
+                        <p>独立设计六足运动学算法，支持多种地形自适应步态，曾在省级创新创业大赛中展出。</p>
+                        <span class="tag">自研智能</span>
+                    </div>
+                </div>
+                <!-- 卡片 13-21 - 对外交流 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo1.jpg" alt="国际机器人竞赛交流" />
+                    <div class="card-body">
+                        <h4>第四届全国高校青年教师教学设计创新大赛</h4>
+                        <p>与各个高校电气类专业高手交锋，夺得国赛一等奖</p>
+                        <span class="tag">多元荣誉</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo2.jpg" alt="高校联合实验室" />
+                    <div class="card-body">
+                        <h4>南京邮电大学·实验室参观</h4>
+                        <p>赴南京邮电大学机器人实验室交流学习，了解前沿研究方向与实验平台建设。</p>
+                        <span class="tag">对外交流</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo3.jpg" alt="企业技术合作" />
+                    <div class="card-body">
+                        <h4>XBOTPARK青年工程师交流会</h4>
+                        <p>与全国各大高校的青年工程师线下探讨交流,探索ROBOMASTER比赛之外的队伍建设。</p>
+                        <span class="tag">多元荣誉,对外交流,技术展会</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo4.jpg" alt="社区科普活动" />
+                    <div class="card-body">
+                        <h4>常州大学·实验室探讨会</h4>
+                        <p>参观常大机器人研发工作室，与青年工程师们探讨机械电控等核心研发</p>
+                        <span class="tag">对外交流</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo5.jpg" alt="科技活动周" />
+                    <div class="card-body">
+                        <h4>常州地区高校科技成果参展</h4>
+                        <p>代表学校参加省科技成果展，展示自研机器人成果。</p>
+                        <span class="tag">多元荣誉,技术展会</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo6.jpg" alt="校际友谊赛" />
+                    <div class="card-body">
+                        <h4>校内“棠海电龙”战队招新</h4>
+                        <p>在学校内部组织大规模招新活动，旨在保持队伍传承，激发同学们对机器人的热情。</p>
+                        <span class="tag">校园研学</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo7.jpg" alt="外校参观接待" />
+                    <div class="card-body">
+                        <h4>战队招新现场展示</h4>
+                        <p>激发同学们对机器人的热情，展示工作室成果。</p>
+                        <span class="tag">校园研学</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo8.jpg" alt="行业论坛" />
+                    <div class="card-body">
+                        <h4>RoboMaster现场 机器人调试</h4>
+                        <p>对步兵机器人进行现场调试，通过适应性测试，模块检测保证正常运行。</p>
+                        <span class="tag">RoboMaster</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo9.jpg" alt="成果路演" />
+                    <div class="card-body">
+                        <h4>江苏开放大学·常机电实验室技术探讨会</h4>
+                        <p>在建队初期，与江苏开放大学·开拓者战队进行交流学习，为步兵机器人搭建奠定基础。</p>
+                        <span class="tag">对外交流</span>
+                    </div>
+                </div>
+                <!-- 卡片 22-24 - 多元荣誉 -->
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo10.jpg" alt="全国大学生机器人大赛" />
+                    <div class="card-body">
+                        <h4>第八届中华职业教育创新创业大赛 国家级一等奖</h4>
+                        <p>第八届中华职业教育创新创业大赛具身智能赛道晋级全国赛，获国家级一等奖。</p>
+                        <span class="tag">多元荣誉</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo11.jpg" alt="省级优秀创新团队" />
+                    <div class="card-body">
+                        <h4>匈牙利职教代表团来访交流</h4>
+                        <p>匈牙利职教代表团到访本校，重点考察了学校在智能机器人、工业机器人及产教融合领域的实训基地与人才培养模式，双方就共建智能制造人才培养体系达成多项共识。</p>
+                        <span class="tag">对外交流</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo12.jpg" alt="专利申请与论文" />
+                    <div class="card-body">
+                        <h4>实用新型专利</h4>
+                        <p>累计申请外观专利 17 项、实用新型专利 10 项，科研成果丰硕。</p>
+                        <span class="tag">多元荣誉</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo13.jpg" alt="省级优秀创新团队" />
+                    <div class="card-body">
+                        <h4>“文明互鉴·智汇中意”意大利大学生短期研学活动</h4>
+                        <p>“文明互鉴·智汇中意”意大利大学生短期研学活动在智能机器人工作室开展文化交流与实践体验，促进中意青年在智能技术领域的技能共享与人文互通。</p>
+                        <span class="tag">校园研学,对外交流</span>
+                    </div>
+                </div>
+                <div class="work-card card-folded">
+                    <img class="media" src="assets/images/expo14.jpg" alt="省级优秀创新团队" />
+                    <div class="card-body">
+                        <h4>智元机器人·校园展示</h4>
+                        <p>操作智元机器人在校内面向参会嘉宾完成动态功能演示与交互体验展示，全面呈现其运动控制精度、环境感知能力及任务执行可靠性。</p>
+                        <span class="tag">校园研学,对外交流</span>
+                    </div>
+                </div>
+            </div>
+            <div class="work-toggle-wrap">
+                <button class="work-toggle" id="workToggle">
+                    展开更多 <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 4. TEAM ===== -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-users"></i> 团队核心</span>
+                <h2 class="section-title">指导教师 & <span class="highlight">学生骨干</span></h2>
+                <p class="section-desc mx-auto">热爱机器人的师生团队，用技术与汗水书写青春。</p>
+            </div>
+            <!-- 团队过滤按钮 -->
+            <div class="work-filter" style="margin:32px 0 36px;">
+                <button class="active" data-team="all">全部</button>
+                <button data-team="teacher">指导教师</button>
+                <button data-team="student">学生骨干</button>
+            </div>
+            <div class="team-grid">
+                <div class="team-card" data-team="teacher">
+                    <img class="avatar" src="assets/images/PERSON/SPF.jpg" alt="束博士" />
+                    <h4>束攀峰</h4>
+                    <div class="role">指导教师 / 嵌入式专家</div>
+                    <p class="bio">10 年机器人竞赛指导经验，带领团队多次闯入国赛。</p>
+                    <div class="team-social">
+                        <a href="#" title="365957496@QQ.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-card" data-team="student">
+                    <img class="avatar" src="assets/images/PERSON/WC.jpg" alt="吴老师" />
+                    <h4>吴超</h4>
+                    <div class="role">指导教师 / 嵌入式专家</div>
+                    <p class="bio">精通 STM32 与 FreeRTOS,主导多款控制系统开发。</p>
+                    <div class="team-social">
+                        <a href="#" title="420305735@QQ.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-card" data-team="student">
+                    <img class="avatar" src="assets/images/PERSON/ZJJ.jpg" alt="郑金聚" />
+                    <h4>郑金聚</h4>
+                    <div class="role">队长 / 机械与算法</div>
+                    <p class="bio">多项教学，行业赛全国一等奖得主，擅长机械设计与视觉算法。</p>
+                    <div class="team-social">
+                        <a href="#" title="1458374880@QQ.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 4.5 历代团队 ===== -->
+    <section class="history" id="history">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-history"></i> 薪火相传</span>
+                <h2 class="section-title">历代 <span class="highlight">团队</span></h2>
+                <p class="section-desc mx-auto">一届又一届的机电学子，在智能机器人工作室留下奋斗的足迹。</p>
+            </div>
+            <!-- 届别切换 -->
+            <div class="work-filter" style="margin:32px 0 36px;">
+                <button class="active" data-gen="2024">2024 级</button>
+                <button data-gen="2025">2025 级</button>
+            </div>
+            <!-- 2024级 -->
+            <div class="gen-panel" id="gen2024">
+                <div class="team-grid">
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/ZJJ.jpg" alt="队长" />
+                        <h4>郑金聚</h4>
+                        <div class="role">2024 级 队长 / 视觉算法</div>
+                        <p class="bio">带队获 RoboMaster 区域赛步兵三等奖 工程二等奖 3V3三等奖，主导装甲板识别算法全流程研发，实现高精度实时目标定位与跟踪。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/FS.jpg" alt="队员" />
+                        <h4>方硕</h4>
+                        <div class="role">副队长 /嵌入式开发 </div>
+                        <p class="bio">完成 STM32 主控板驱动程序开发，实现 CAN 总线多节点通信。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/YK.jpg" alt="队员" />
+                        <h4>郁凯</h4>
+                        <div class="role">机械设计</div>
+                        <p class="bio">负责机器人全向轮底盘的结构设计与三维建模，精通SolidWorks平台，完成从总体布局、零部件强度校核到整机装配及工程图纸输出的全流程，确保底盘刚度、轻量化及制造工艺性满足设计要求。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/HSY.jpg" alt="队员" />
+                        <h4>黄舒扬</h4>
+                        <div class="role">电控与测试</div>
+                        <p class="bio">负责机械臂全栈式控制系统的研发与调试，涵盖底层固件架构设计、应用层代码实现及无线通信链路搭建，并依托定制化控制器实现非接触式远程精准操控。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/ZKL.jpg" alt="队员" />
+                        <h4>郑凯伦</h4>
+                        <div class="role">机械装配设计</div>
+                        <p class="bio">负责全向轮底盘的机械集成与精密装配，确保轮系定位精度、驱动耦合可靠性及整体结构刚度满足运动控制需求。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/LZY.jpg" alt="队员" />
+                        <h4>陆泽业</h4>
+                        <div class="role">硬件设计测试</div>
+                        <p class="bio">负责整车硬件设计的全流程验证与测试，确保信号完整性及电路可靠性满足系统级容错要求</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/CC.jpg" alt="队员" />
+                        <h4>陈诚</h4>
+                        <div class="role">机械设计</div>
+                        <p class="bio">负责全向轮底盘与自主设计机械臂的机械结构集成与强度设计，通过静力学分析确定关键构件的截面尺寸及材料规格，确保系统整体刚度与承载能力满足作业要求。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/BYS.jpg" alt="队员" />
+                        <h4>白袁松</h4>
+                        <div class="role">机械设计</div>
+                        <p class="bio">负责哨兵全形态机械结构的方案设计与实体搭建，涵盖多构型转换机构、承载框架及连接件的强度校核与关键尺寸优化，确保系统在极限工况下的结构刚性与承载安全性。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 2025级 -->
+            <div class="gen-panel" id="gen2025" style="display:none;">
+                <div class="team-grid">
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/gen25_1.jpg" alt="队长" />
+                        <h4>吴超</h4>
+                        <div class="role">2025 届队长 / 机械与算法</div>
+                        <p class="bio">2024 Robocon 全国一等奖得主，擅长机械设计与视觉算法。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/gen25_2.jpg" alt="队员" />
+                        <h4>郑金聚</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/gen25_3.jpg" alt="队员" />
+                        <h4>方硕</h4>
+                        <div class="role">电路与硬件设计</div>
+                        <p class="bio">擅长 PCB 设计与传感器融合，为机器人提供稳定的硬件基础。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/gen25_4.jpg" alt="队员" />
+                        <h4>周明哲</h4>
+                        <div class="role">算法与仿真</div>
+                        <p class="bio">负责运动控制算法仿真，在 Gazebo 中完成全地形步态模拟。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 5. CONTACT ===== -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-rocket"></i> 加入我们</span>
+                <h2 class="section-title">成为 <span class="highlight">机器人创客</span></h2>
+                <p class="section-desc mx-auto">如果你对机器人充满热情，渴望在竞赛中成长，欢迎加入我们的团队。</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>工作室信息</h3>
+                    <p>常州机电职业技术学院 · 智能机器人工作室</p>
+                    <div class="contact-item">
+                        <i class="fas fa-map-pin"></i>
+                        <div>
+                            <span>江苏省常州市武进区湖塘镇鸣新中路26号</span>
+                            <small>求实楼 1.5层智能机器人工作室</small>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <span>招新咨询 & 技术交流</span>
+                            <small>QQ群：1094146641</small>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <span>招新时间</span>
+                            <small>每学期初，关注学院通知和QQ群通知</small>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:18px; margin-top:28px;">
+                        <a href="https://www.douyin.com/user/MS4wLjABAAAAsawEf1a83k_d-k3D7PBj-JGA-oFTmcLsr2ABVBNgMeBfbK6zEHSom2BDftfbFKUr?from_tab_name=main" target="_blank" style="color:var(--text-muted);font-size:1.4rem;transition:var(--transition);"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" style="color:var(--text-muted);font-size:1.4rem;transition:var(--transition);"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm" action="https://formspree.io/f/xkjwwqqg" method="POST">
+                    <!-- ↓ 去 https://formspree.io 注册 → 创建表单 → 把 FORM_ID 替换上面 YOUR_FORM_ID ↓ -->
+                    <div class="form-group">
+                        <label for="name">您的姓名</label>
+                        <input type="text" id="name" name="name" placeholder="姓名" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱 / 学号</label>
+                        <input type="email" id="email" name="email" placeholder="example@czimt.edu.cn" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">留言 / 感兴趣的方向</label>
+                        <textarea id="message" name="message" placeholder="例如：我想参加 RoboMaster 团队…" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> 发送申请
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-robot"></i>
+                <span>智能机器人工作室</span>
+                <small style="color:rgba(255,255,255,0.5);">常州机电</small>
+            </a>
+            <ul class="footer-links">
+                <li><a href="#about">关于</a></li>
+                <li><a href="#work">竞赛</a></li>
+                <li><a href="#team">团队</a></li>
+                <li><a href="#contact">加入</a></li>
+            </ul>
+            <div class="copy">
+                &copy; 2026 常州机电职业技术学院 · 智能机器人工作室
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JavaScript ===== -->
+    <script>
+        // 1. 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 2. 移动端汉堡菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // 3. 作品过滤 + 折叠展开
+        const filterBtns = document.querySelectorAll('.work .work-filter button');
+        const workCards = document.querySelectorAll('.work .work-card');
+        const workToggle = document.getElementById('workToggle');
+        let isExpanded = false;
+        let activeFilter = '全部';
+
+        function applyCardVisibility() {
+            workCards.forEach(card => {
+                const tag = card.querySelector('.tag');
+                const cardTags = tag ? tag.textContent.trim().split(/[,，、]/).map(t => t.trim()) : [];
+                const matchFilter = (activeFilter === '全部' || cardTags.includes(activeFilter));
+                const isFolded = card.classList.contains('card-folded');
+
+                if (!matchFilter) {
+                    card.style.display = 'none';
+                } else if (isFolded && !isExpanded && activeFilter === '全部') {
+                    card.style.display = 'none';
+                } else {
+                    card.style.display = 'block';
+                }
+            });
+        }
+
+        function updateToggleButton() {
+            if (isExpanded) {
+                workToggle.innerHTML = '收起 <i class="fas fa-chevron-up"></i>';
+                workToggle.classList.add('expanded');
+            } else {
+                workToggle.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
+                workToggle.classList.remove('expanded');
+            }
+            // 当选择了具体分类时隐藏折叠按钮（因为已全部展开）
+            workToggle.parentElement.style.display = (activeFilter !== '全部') ? 'none' : '';
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.textContent.trim();
+                if (activeFilter !== '全部') {
+                    isExpanded = true; // 选具体分类时自动展开
+                } else {
+                    isExpanded = false; // 回"全部"时恢复折叠
+                }
+                applyCardVisibility();
+                updateToggleButton();
+            });
+        });
+
+        workToggle.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            applyCardVisibility();
+            updateToggleButton();
+        });
+
+        // 初始状态：折叠
+        applyCardVisibility();
+
+        // 3.5 表单提交（Web3Forms 邮件服务）
+        const contactForm = document.getElementById('contactForm');
+
+        function showToast(msg, isError) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            if (isError) toast.style.background = '#c0392b';
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3000);
+        }
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button[type="submit"]');
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 发送中…';
+            btn.disabled = true;
+
+            try {
+                const formData = new FormData(contactForm);
+                const resp = await fetch(contactForm.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: formData
+                });
+                const result = await resp.json();
+                if (result.ok) {
+                    contactForm.reset();
+                    showToast('申请已发送！我们会尽快联系你');
+                } else {
+                    const msg = result.error || '发送失败，请检查表单是否已激活';
+                    showToast(msg, true);
+                }
+            } catch (err) {
+                showToast('发送失败，请确保已替换 Form ID 并激活表单', true);
+            }
+
+            btn.innerHTML = origHTML;
+            btn.disabled = false;
+        });
+
+        // 3.8 团队过滤
+        const teamFilterBtns = document.querySelectorAll('.team .work-filter button');
+        const teamCards = document.querySelectorAll('.team .team-card');
+        teamFilterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                teamFilterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-team');
+                teamCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-team') === filter) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 3.9 历代团队切换
+        const genBtns = document.querySelectorAll('.history .work-filter button');
+        const genPanels = document.querySelectorAll('.gen-panel');
+        genBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                genBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const gen = btn.getAttribute('data-gen');
+                genPanels.forEach(panel => {
+                    panel.style.display = (panel.id === 'gen' + gen) ? '' : 'none';
+                });
+            });
+        });
+
+        // 3.10 卡片悬停预览浮层
+        const previewEl = document.createElement('div');
+        previewEl.className = 'card-preview';
+        document.body.appendChild(previewEl);
+        let previewTimer = null;
+        let currentHoverCard = null;
+
+        const allWorkCards = document.querySelectorAll('.work-card');
+        allWorkCards.forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                currentHoverCard = card;
+                clearTimeout(previewTimer);
+                previewTimer = setTimeout(() => {
+                    if (currentHoverCard !== card) return;
+                    const media = card.querySelector('.media, .media-video');
+                    const title = card.querySelector('h4');
+                    const desc = card.querySelector('p');
+                    if (!media) return;
+
+                    let mediaHTML = '';
+                    if (media.tagName === 'VIDEO') {
+                        const src = media.querySelector('source')?.getAttribute('src') || '';
+                        mediaHTML = `<video src="${src}" muted loop playsinline autoplay style="width:100%;max-height:300px;object-fit:contain;border-radius:10px;margin-bottom:14px;"></video>`;
+                    } else {
+                        mediaHTML = `<img src="${media.getAttribute('src')}" alt="${media.getAttribute('alt') || ''}" />`;
+                    }
+                    previewEl.innerHTML = mediaHTML
+                        + (title ? `<h4>${title.textContent}</h4>` : '')
+                        + (desc ? `<p>${desc.textContent}</p>` : '');
+                    previewEl.classList.add('show');
+                    positionPreview(e);
+                }, 200);
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                if (previewEl.classList.contains('show')) positionPreview(e);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                currentHoverCard = null;
+                clearTimeout(previewTimer);
+                previewEl.classList.remove('show');
+            });
+        });
+
+        function positionPreview(e) {
+            const pw = previewEl.offsetWidth || 360;
+            const ph = previewEl.offsetHeight || 200;
+            let left = e.clientX + 20;
+            let top = e.clientY - 20;
+            if (left + pw > window.innerWidth - 10) left = e.clientX - pw - 20;
+            if (top + ph > window.innerHeight - 10) top = window.innerHeight - ph - 10;
+            previewEl.style.left = left + 'px';
+            previewEl.style.top = top + 'px';
+        }
+
+        // 4. 视频自动播放 (进入视口)
+        const videos = document.querySelectorAll('.media-video');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        videos.forEach(video => {
+            observer.observe(video);
+            video.muted = true;
+        });
+
+        console.log('🤖 常州机电 · 智能机器人工作室 (本地部署版)');
+    </script>
+</body>
+</html>
