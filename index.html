@@ -63,6 +63,7 @@
         .hero-visual .main-img:hover { transform:scale(1.01); box-shadow:var(--shadow-hover); }
         .hero-visual .thumb-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
         .hero-visual .thumb-row img,.hero-visual .thumb-row video { border-radius:var(--radius-sm); height:100px; object-fit:cover; background:#d4e7f5; transition:var(--transition); cursor:pointer; }
+        .hero-visual .thumb-row video { background:#1A2A3A; }
         .hero-visual .thumb-row img:hover,.hero-visual .thumb-row video:hover { transform:scale(1.04); box-shadow:var(--shadow-sm); }
         .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-top:40px; }
         .about-image { border-radius:var(--radius-sm); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); }
@@ -275,9 +276,9 @@
                     alt="机器人实验室"
                     />
                     <div class="thumb-row">
-                        <video class="thumb-video" src="assets/videos/debug.mp4" muted loop playsinline autoplay style="border-radius:var(--radius-sm);height:100px;object-fit:cover;background:#1A2A3A;cursor:pointer;"></video>
+                        <video class="thumb-video" src="assets/videos/debug.mp4" muted loop playsinline autoplay></video>
                         <img src="assets/images/DLB.webp" alt="电路板" />
-                        <video class="thumb-video" src="assets/videos/match.mp4" muted loop playsinline autoplay style="border-radius:var(--radius-sm);height:100px;object-fit:cover;background:#1A2A3A;cursor:pointer;"></video>
+                        <video class="thumb-video" src="assets/videos/match.mp4" muted loop playsinline autoplay></video>
                     </div>
                 </div>
             </div>
