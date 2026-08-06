@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
@@ -87,12 +87,15 @@
         .work-card .card-body h4 { font-size:1.2rem; font-weight:600; margin-bottom:6px; }
         .work-card .card-body p { color:var(--text-muted); font-size:0.95rem; }
         .work-card .tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--primary); background:rgba(26,107,138,0.08); padding:4px 14px; border-radius:40px; margin-top:10px; }
-        /* 悬停预览浮层 */
-        .card-preview { position:fixed; z-index:9999; background:var(--bg-white); border-radius:var(--radius-sm); box-shadow:0 30px 70px rgba(26,107,138,0.25); padding:20px; opacity:0; transform:translateY(10px); transition:opacity 0.5s ease,transform 0.5s ease; pointer-events:none; max-width:360px; }
-        .card-preview.show { opacity:1; transform:translateY(0); }
-        .card-preview img,.card-preview video { width:100%; max-height:300px; object-fit:contain; border-radius:10px; margin-bottom:14px; }
-        .card-preview h4 { font-size:1.1rem; font-weight:600; margin-bottom:6px; color:var(--text-dark); }
-        .card-preview p { font-size:0.9rem; color:var(--text-muted); line-height:1.6; }
+        /* 点击灯箱 */
+        .lightbox-overlay { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .lightbox-overlay.show { opacity:1; pointer-events:auto; }
+        .lightbox-content { background:var(--bg-white); border-radius:var(--radius-sm); padding:24px; max-width:90vw; max-height:90vh; overflow-y:auto; text-align:center; position:relative; }
+        .lightbox-content img,.lightbox-content video { max-width:100%; max-height:55vh; object-fit:contain; border-radius:10px; }
+        .lightbox-content h4 { font-size:1.1rem; font-weight:600; margin:14px 0 6px; color:var(--text-dark); }
+        .lightbox-content p { font-size:0.9rem; color:var(--text-muted); line-height:1.5; }
+        .lightbox-close { position:absolute; top:8px; right:14px; font-size:1.5rem; color:var(--text-muted); cursor:pointer; background:none; border:none; }
+        .lightbox-close:hover { color:var(--primary); }
         .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:32px; margin-top:48px; }
         .team-card { text-align:center; background:rgba(26,107,138,0.03); padding:32px 20px 28px; border-radius:var(--radius-sm); transition:var(--transition); border:1px solid rgba(26,107,138,0.04); }
         .team-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-hover); background:var(--bg-white); }
@@ -177,7 +180,7 @@
             footer .container { flex-direction:column; text-align:center; }
             footer .footer-links { gap:16px; flex-wrap:wrap; justify-content:center; }
             section { margin:20px 10px; padding:40px 0; border-radius:20px; }
-            .card-preview { display:none !important; }
+            .lightbox-content { max-width:95vw; padding:18px; }
             .gen-panel .team-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
         }
         .work-card.card-folded { display:none; }
@@ -604,7 +607,7 @@
                         <a href="#" title="365957496@QQ.com"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
-                <div class="team-card" data-team="student">
+                <div class="team-card" data-team="teacher">
                     <img class="avatar" src="assets/images/PERSON/WC.webp" alt="吴老师" />
                     <h4>吴超</h4>
                     <div class="role">指导教师 / 嵌入式专家</div>
@@ -696,28 +699,94 @@
             <div class="gen-panel" id="gen2025" style="display:none;">
                 <div class="team-grid">
                     <div class="team-card">
-                        <img class="avatar" src="assets/images/gen25_1.webp" alt="队长" />
-                        <h4>吴超</h4>
-                        <div class="role">2025 届队长 / 机械与算法</div>
-                        <p class="bio">2024 Robocon 全国一等奖得主，擅长机械设计与视觉算法。</p>
+                        <img class="avatar" src="assets/images/PERSON/ZJC.webp" alt="队长" />
+                        <h4>周俊成</h4>
+                        <div class="role">2025 级队长 / 机械与算法</div>
+                        <p class="bio">擅长机械装配与视觉算法</p>
                     </div>
                     <div class="team-card">
-                        <img class="avatar" src="assets/images/gen25_2.webp" alt="队员" />
-                        <h4>郑金聚</h4>
+                        <img class="avatar" src="assets/images/PERSON/LSX.webp" alt="队员" />
+                        <h4>刘世勋</h4>
                         <div class="role">嵌入式软件负责人</div>
                         <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
                     </div>
                     <div class="team-card">
-                        <img class="avatar" src="assets/images/gen25_3.webp" alt="队员" />
-                        <h4>方硕</h4>
+                        <img class="avatar" src="assets/images/PERSON/YZH.webp" alt="队员" />
+                        <h4>俞哲浩</h4>
                         <div class="role">电路与硬件设计</div>
                         <p class="bio">擅长 PCB 设计与传感器融合，为机器人提供稳定的硬件基础。</p>
                     </div>
+                     <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/ZJH.webp" alt="队员" />
+                        <h4>赵锦鸿</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
                     <div class="team-card">
-                        <img class="avatar" src="assets/images/gen25_4.webp" alt="队员" />
-                        <h4>周明哲</h4>
+                        <img class="avatar" src="assets/images/PERSON/WJR.webp" alt="队员" />
+                        <h4>魏锦润</h4>
                         <div class="role">算法与仿真</div>
                         <p class="bio">负责运动控制算法仿真，在 Gazebo 中完成全地形步态模拟。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/WCX.webp" alt="队员" />
+                        <h4>王辰锡</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/HSH.webp" alt="队员" />
+                        <h4>韩思慧</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/FZY.webp" alt="队员" />
+                        <h4>方正洋</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/JAD.webp" alt="队员" />
+                        <h4>蒋安东</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/YHQ.webp" alt="队员" />
+                        <h4>杨浩乾</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/CZQ.webp" alt="队员" />
+                        <h4>陈子谦</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/SYC.webp" alt="队员" />
+                        <h4>司誉城</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/TGF.webp" alt="队员" />
+                        <h4>唐高峰</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/ZMT.webp" alt="队员" />
+                        <h4>赵梦涛</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
+                    </div>
+                    <div class="team-card">
+                        <img class="avatar" src="assets/images/PERSON/YHQ.webp" alt="队员" />
+                        <h4>杨浩乾</h4>
+                        <div class="role">嵌入式软件负责人</div>
+                        <p class="bio">精通 STM32 与 FreeRTOS，主导多款机器人控制系统开发。</p>
                     </div>
                 </div>
             </div>
@@ -949,9 +1018,51 @@
             });
         });
 
-        // 3.9 历代团队切换
+        // 3.9 历代团队切换 + 折叠
         const genBtns = document.querySelectorAll('.history .work-filter button');
         const genPanels = document.querySelectorAll('.gen-panel');
+        let genExpanded = false;
+        let genToggleWrap = null;
+        let genToggleBtn = null;
+
+        // 初始化折叠：每代只显示前4人
+        genPanels.forEach(panel => {
+            const cards = panel.querySelectorAll('.team-card');
+            cards.forEach((card, i) => {
+                if (i >= 4) {
+                    card.classList.add('gen-folded');
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // 如果存在需要折叠的卡片，创建按钮
+        const totalFolded = document.querySelectorAll('.gen-folded').length;
+        if (totalFolded > 0) {
+            genToggleWrap = document.createElement('div');
+            genToggleWrap.className = 'work-toggle-wrap';
+            genToggleBtn = document.createElement('button');
+            genToggleBtn.className = 'work-toggle';
+            genToggleBtn.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
+            genToggleWrap.appendChild(genToggleBtn);
+            const historyContainer = document.querySelector('.history .container');
+            historyContainer.appendChild(genToggleWrap);
+
+            genToggleBtn.addEventListener('click', () => {
+                genExpanded = !genExpanded;
+                document.querySelectorAll('.gen-folded').forEach(c => {
+                    c.style.display = genExpanded ? '' : 'none';
+                });
+                if (genExpanded) {
+                    genToggleBtn.innerHTML = '收起 <i class="fas fa-chevron-up"></i>';
+                    genToggleBtn.classList.add('expanded');
+                } else {
+                    genToggleBtn.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
+                    genToggleBtn.classList.remove('expanded');
+                }
+            });
+        }
+
         genBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 genBtns.forEach(b => b.classList.remove('active'));
@@ -960,64 +1071,71 @@
                 genPanels.forEach(panel => {
                     panel.style.display = (panel.id === 'gen' + gen) ? '' : 'none';
                 });
+                // 切换年级时重置折叠状态
+                genExpanded = false;
+                document.querySelectorAll('.gen-folded').forEach(c => { c.style.display = 'none'; });
+                if (genToggleBtn) {
+                    genToggleBtn.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
+                    genToggleBtn.classList.remove('expanded');
+                }
             });
         });
 
-        // 3.10 卡片悬停预览浮层
-        const previewEl = document.createElement('div');
-        previewEl.className = 'card-preview';
-        document.body.appendChild(previewEl);
-        let previewTimer = null;
-        let currentHoverCard = null;
+        // 3.10 点击灯箱预览
+        const overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        overlay.innerHTML = '<div class="lightbox-content"><button class="lightbox-close">&times;</button><div class="lightbox-body"></div></div>';
+        document.body.appendChild(overlay);
 
-        const allWorkCards = document.querySelectorAll('.work-card');
-        allWorkCards.forEach(card => {
-            card.addEventListener('mouseenter', (e) => {
-                currentHoverCard = card;
-                clearTimeout(previewTimer);
-                previewTimer = setTimeout(() => {
-                    if (currentHoverCard !== card) return;
-                    const media = card.querySelector('.media, .media-video');
-                    const title = card.querySelector('h4');
-                    const desc = card.querySelector('p');
-                    if (!media) return;
+        const lightboxBody = overlay.querySelector('.lightbox-body');
+        const lightboxClose = overlay.querySelector('.lightbox-close');
 
-                    let mediaHTML = '';
-                    if (media.tagName === 'VIDEO') {
-                        const src = media.querySelector('source')?.getAttribute('src') || '';
-                        mediaHTML = `<video src="${src}" muted loop playsinline autoplay style="width:100%;max-height:300px;object-fit:contain;border-radius:10px;margin-bottom:14px;"></video>`;
-                    } else {
-                        mediaHTML = `<img src="${media.getAttribute('src')}" alt="${media.getAttribute('alt') || ''}" />`;
-                    }
-                    previewEl.innerHTML = mediaHTML
-                        + (title ? `<h4>${title.textContent}</h4>` : '')
-                        + (desc ? `<p>${desc.textContent}</p>` : '');
-                    previewEl.classList.add('show');
-                    positionPreview(e);
-                }, 200);
-            });
-
-            card.addEventListener('mousemove', (e) => {
-                if (previewEl.classList.contains('show')) positionPreview(e);
-            });
-
-            card.addEventListener('mouseleave', () => {
-                currentHoverCard = null;
-                clearTimeout(previewTimer);
-                previewEl.classList.remove('show');
-            });
-        });
-
-        function positionPreview(e) {
-            const pw = previewEl.offsetWidth || 360;
-            const ph = previewEl.offsetHeight || 200;
-            let left = e.clientX + 20;
-            let top = e.clientY - 20;
-            if (left + pw > window.innerWidth - 10) left = e.clientX - pw - 20;
-            if (top + ph > window.innerHeight - 10) top = window.innerHeight - ph - 10;
-            previewEl.style.left = left + 'px';
-            previewEl.style.top = top + 'px';
+        function openLightbox(mediaEl, titleEl, descEl) {
+            let mediaHTML = '';
+            if (mediaEl.tagName === 'VIDEO') {
+                const src = mediaEl.src || mediaEl.querySelector('source')?.getAttribute('src') || '';
+                mediaHTML = `<video src="${src}" controls playsinline style="max-width:100%;max-height:55vh;border-radius:10px;"></video>`;
+            } else {
+                mediaHTML = `<img src="${mediaEl.getAttribute('src')}" alt="${mediaEl.getAttribute('alt') || ''}" />`;
+            }
+            lightboxBody.innerHTML = mediaHTML
+                + (titleEl ? `<h4>${titleEl.textContent}</h4>` : '')
+                + (descEl ? `<p>${descEl.textContent}</p>` : '');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
+
+        function closeLightbox() {
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+            const v = lightboxBody.querySelector('video');
+            if (v) { v.pause(); v.removeAttribute('src'); }
+        }
+
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeLightbox(); });
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        document.querySelectorAll('.work .work-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('button') || e.target.closest('.tag')) return;
+                const media = card.querySelector('.media, .media-video');
+                const title = card.querySelector('h4');
+                const desc = card.querySelector('p');
+                if (media) openLightbox(media, title, desc);
+            });
+        });
+
+        // 缩略图也支持点击灯箱
+        document.querySelectorAll('.thumb-row video, .thumb-row img').forEach(thumb => {
+            thumb.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (thumb.tagName === 'VIDEO') {
+                    openLightbox(thumb, null, null);
+                } else {
+                    openLightbox(thumb, null, null);
+                }
+            });
+        });
 
         // 4. 视频自动播放 (进入视口)
         const videos = document.querySelectorAll('.media-video');
